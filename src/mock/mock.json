@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Titulo 01",
+    "description": "Aqui uma descrição para o meu titulo",
+    "body": "Aqui será toda a máteria publicada para o meu titulo e artigo. Nele poderão conter diversas formas de formatação, preciso ficar esperto com esse problema na validação.",
+    "authorId": "830032f9-e3cf-4a0f-92e2-6c1b68e9f0c3"
+  },
+  {
+    "title": "Titulo 02",
+    "description": "Aqui uma descrição para o meu titulo 02",
+    "body": "Aqui será toda a máteria publicada para o meu titulo e artigo. Nele poderão conter diversas formas de formatação, preciso ficar esperto com esse problema na validação.",
+    "published": true,
+    "authorId": "830032f9-e3cf-4a0f-92e2-6c1b68e9f0c3"
+  },
+  {
+    "title": "Titulo com imagem",
+		"description": "Aqui uma descrição para o meu titulo com imagem",
+		"body": "Aqui será toda a máteria publicada para o meu titulo e artigo. Nele poderão conter diversas formas de formatação, preciso ficar esperto com esse problema na validação.",
+	  "published": true,
+	  "imageUrl": "https://s5.static.brasilescola.uol.com.br/be/2023/02/parte-de-um-quebra-cabeca-formando-a-palavra-articles-que-e-a-forma-como-se-diz-artigos-em-ingles.jpg"
+  }
+]

@@ -1,16 +1,7 @@
----
-title: ExpressJS Prisma
-description: An ExpressJS server that uses Prisma to connect to a PostgreSQL database
-tags:
-  - express
-  - postgresql
-  - prisma
-  - typescript
----
 
-# ExpressJS Prisma Example
+# Blag API
 
-This is an [ExpressJS](https://expressjs.com/) REST API that uses [Prisma](https://www.prisma.io/) to connect to a Postgres database and CRUD todos.
+This is an [ExpressJS](https://expressjs.com/) REST API that uses [Prisma](https://www.prisma.io/) to connect to a Postgres database and CRUD blog.
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/LqCw_O)
 
@@ -20,6 +11,10 @@ This is an [ExpressJS](https://expressjs.com/) REST API that uses [Prisma](https
 - Express
 - Postgres
 - TypeScript
+- Cloudinary
+- Jsonwebtoken
+- Marked
+- Node-cron
 
 ## 💁‍♀️ How to use
 
@@ -31,10 +26,31 @@ This is an [ExpressJS](https://expressjs.com/) REST API that uses [Prisma](https
 
 ## 📝 Notes
 
-This is a simple REST API for todo items. The available routes are
+This is a simple REST API for blog items. The available routes are
 
-- `GET /todos` gets all todos
-- `POST /todos` creates a new using `text` in the JSON body
-- `GET /todos/:id` gets a todo by id
-- `PUT /todos/:id` updates a todo by id
-- `DELETE /todos/:id` deletes a todo by id
+> ## Auth
+- `POST /users/login` gets all todos *
+- `POST /users/logout` creates a new using `text` in the JSON body *
+- `POST /users/refresh-token` gets a todo by id *
+  
+#
+
+> ## User
+- `POST /users` login using text in the JSON body *
+- `GET /users` gets all users
+- `GET /users/:id` gets a user by id
+- `PATCH /users/:id` updates a user by id
+- `DELETE /users/:id` deletes a user by id
+
+#
+
+> ## Article
+- `GET /articles:id` gets all articles *
+- `GET /users/:userId/articles` gets all articles of a user by `userId`  *
+- `POST /articles` create a new article using `text` in the JSON body (image attachment or image URL optional)
+- `GET /articles/` gets all articles
+- `PATCH /articles/:id` updates a articles by id
+- `DELETE /articles/:id` deletes a articles by id
+
+
+_`*` Don't require authentication on the route._ 
