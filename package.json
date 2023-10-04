@@ -1,8 +1,8 @@
 {
-  "name": "expressjs-prisma",
-  "version": "1.0.0",
+  "name": "blag-api",
+  "version": "1.0.1",
   "main": "index.js",
-  "author": "Jake Runzer",
+  "author": "Adriel Gama",
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server.ts",
