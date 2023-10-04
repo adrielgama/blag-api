@@ -19,7 +19,7 @@ router.post('/users/logout', authcontroller.logout)
 router.post('/users/refresh-token', authcontroller.refreshToken)
 
 // USER
-router.post('/users', usercontroller.createUser)
+router.post('/users/new', usercontroller.createUser)
 router.get('/users', AuthMiddleware, usercontroller.getUser)
 router.get('/users/:id', AuthMiddleware, usercontroller.getSingleUser)
 router.patch('/users/:id', AuthMiddleware, usercontroller.updateUser)
