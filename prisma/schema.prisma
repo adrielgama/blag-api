@@ -10,11 +10,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-enum Role {
-  USER
-  ADMIN
-}
-
 model Article {
   id          String   @id @default(uuid())
   title       String
@@ -33,7 +28,7 @@ model User {
   name         String
   email        String        @unique
   password     String
-  typeUser     Role          @default(USER)
+  typeUser     String        @default("USER")
   createdAt    DateTime      @default(now())
   Article      Article[]
   RefreshToken RefreshToken?
