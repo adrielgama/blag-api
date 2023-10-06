@@ -80,7 +80,7 @@ export class ArticleController {
     })
 
     if (!article) {
-      return res.json({ error: 'Article not found' })
+      return res.status(404).json({ error: 'Article not found' })
     }
 
     return res.json({ article })

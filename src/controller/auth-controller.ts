@@ -22,13 +22,13 @@ export class AuthController {
     })
 
     if (!user) {
-      return res.json({ error: 'User not found' })
+      return res.status(404).json({ error: 'User not found' })
     }
 
     const isValuePassword = await compare(password, user.password)
 
     if (!isValuePassword) {
-      return res.json({ error: 'Invalid password' })
+      return res.status(401).json({ error: 'Invalid password' })
     }
 
     if (!jwtKey) {
