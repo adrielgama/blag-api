@@ -17,7 +17,7 @@ export const router = Router()
 router.post('/users/login', authController.login)
 router.post('/users/logout', authController.logout)
 router.post('/users/refresh-token', authController.refreshToken)
-router.get('/users/verify-token', authController.verifyToken)
+router.get('/users/verify-token', AuthMiddleware, authController.verifyToken)
 
 // USER
 router.post('/users/new', userController.createUser)
