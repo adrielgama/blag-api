@@ -1,6 +1,6 @@
 import { compare } from 'bcrypt'
 import { Request, Response } from 'express'
-import { sign } from 'jsonwebtoken'
+import { JwtPayload, sign, verify } from 'jsonwebtoken'
 import { v4 as uuid } from 'uuid'
 import { prisma } from '../utils/prisma'
 import 'dotenv/config'
@@ -128,5 +128,31 @@ export class AuthController {
       console.error('Error fetching refreshToken:', error)
       return res.status(500).json({ error: 'Internal server error.' })
     }
+  }
+
+  async verifyToken(req: Request, res: Response) {
+    const bearerHeader = req.headers.authorization
+
+    if (!bearerHeader) {
+      return res.status(403).json({ error: 'No token provided.' })
+    }
+
+    const token = bearerHeader.split(' ')[1]
+
+    if (!token) {
+      return res.status(403).json({ error: 'Malformatted token.' })
+    }
+
+    verify(token, jwtKey, (err, decoded) => {
+      if (err || !decoded) {
+        return res.status(500).json({ error: 'Failed to authenticate token.' })
+      }
+
+      const payload = decoded as JwtPayload
+
+      return res
+        .status(200)
+        .json({ message: 'Token is valid', userId: payload.id })
+    })
   }
 }

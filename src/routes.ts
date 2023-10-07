@@ -7,33 +7,34 @@ import { AuthMiddleware } from './middleware/auth'
 
 const upload = multer({ dest: 'uploads/' })
 
-const usercontroller = new UserController()
-const authcontroller = new AuthController()
-const articlecontroller = new ArticleController()
+const userController = new UserController()
+const authController = new AuthController()
+const articleController = new ArticleController()
 
 export const router = Router()
 
 // AUTH
-router.post('/users/login', authcontroller.login)
-router.post('/users/logout', authcontroller.logout)
-router.post('/users/refresh-token', authcontroller.refreshToken)
+router.post('/users/login', authController.login)
+router.post('/users/logout', authController.logout)
+router.post('/users/refresh-token', authController.refreshToken)
+router.get('/users/verify-token', authController.verifyToken)
 
 // USER
-router.post('/users/new', usercontroller.createUser)
-router.get('/users', AuthMiddleware, usercontroller.getUser)
-router.get('/users/:id', AuthMiddleware, usercontroller.getSingleUser)
-router.patch('/users/:id', AuthMiddleware, usercontroller.updateUser)
-router.delete('/users/:id', AuthMiddleware, usercontroller.deleteUser)
+router.post('/users/new', userController.createUser)
+router.get('/users', AuthMiddleware, userController.getUser)
+router.get('/users/:id', AuthMiddleware, userController.getSingleUser)
+router.patch('/users/:id', AuthMiddleware, userController.updateUser)
+router.delete('/users/:id', AuthMiddleware, userController.deleteUser)
 
 // ARTICLE
-router.get('/articles/:id', articlecontroller.getUniqueArticle)
-router.get('/users/:userId/articles', articlecontroller.getUserArticles)
+router.get('/articles/:id', articleController.getUniqueArticle)
+router.get('/users/:userId/articles', articleController.getUserArticles)
 router.post(
   '/articles',
   AuthMiddleware,
   upload.single('image'),
-  articlecontroller.createArticle,
+  articleController.createArticle,
 )
-router.get('/articles', AuthMiddleware, articlecontroller.getArticles)
-router.patch('/articles/:id', AuthMiddleware, articlecontroller.updateArticle)
-router.delete('/articles/:id', AuthMiddleware, articlecontroller.deleteArticle)
+router.get('/articles', AuthMiddleware, articleController.getArticles)
+router.patch('/articles/:id', AuthMiddleware, articleController.updateArticle)
+router.delete('/articles/:id', AuthMiddleware, articleController.deleteArticle)
