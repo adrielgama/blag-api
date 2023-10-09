@@ -10,22 +10,12 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     
-    // "target": "es2017",
-    // "module": "commonjs",
-    // "lib": ["es6"],
-    // "allowJs": true,
     "rootDir": "./src",
     "typeRoots": [
       "./node_modules/@types",
-      "./src/@types"
+      "./src/@types",
     ],
     "baseUrl": ".",
-    "paths": {
-      // "@modules/*": ["./src/modules/*"],
-      // "@exceptions/*": ["./src/exceptions/*"],
-      // "@utils/*": ["./src/utils/*"],
-      // "@middlewares/*": ["./src/middlewares/*"],
-      // "@enums/*": ["./src/enums/*"],
-    }
+    "paths": {}
   }
 }
