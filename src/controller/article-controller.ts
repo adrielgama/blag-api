@@ -72,7 +72,7 @@ export class ArticleController {
     const { id } = req.params
 
     try {
-      viewsQueue.add({ articleId: id })
+      await viewsQueue.add({ articleId: id })
 
       const article = await prisma.article.findUnique({
         where: { id },

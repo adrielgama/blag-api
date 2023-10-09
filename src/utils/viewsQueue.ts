@@ -1,11 +1,11 @@
-import Queue, { Job } from 'bull'
+import Bull, { Job } from 'bull'
 import { prisma } from '../utils/prisma'
 
 export interface ViewUpdateJob {
   articleId: string
 }
 
-export const viewsQueue = new Queue<ViewUpdateJob>('articleViews', {
+export const viewsQueue = new Bull<ViewUpdateJob>('articleViews', {
   redis: process.env.REDIS_URL || 'redis://localhost:6379',
   // redis: {
   //   host: process.env.REDISHOST || 'localhost',
