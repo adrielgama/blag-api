@@ -3,7 +3,7 @@
 
 This is an [ExpressJS](https://expressjs.com/) REST API that uses [Prisma](https://www.prisma.io/) to connect to a Postgres database and CRUD blog.
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/LqCw_O)
+[![Deploy using Railway](https://railway.app/button.svg)](https://railway.app?referralCode=adrielgama)
 
 ## ✨ Features
 
@@ -15,6 +15,7 @@ This is an [ExpressJS](https://expressjs.com/) REST API that uses [Prisma](https
 - Jsonwebtoken
 - Marked
 - Node-cron
+- Radis
 
 ## 💁‍♀️ How to use
 
