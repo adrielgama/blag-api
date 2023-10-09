@@ -4,6 +4,7 @@ import { Request, Response } from 'express'
 import { v2 as cloudinary } from 'cloudinary'
 import { prisma } from '../utils/prisma'
 import { ArticleQueryOptions, UpdateArticleData } from '../types'
+import { viewsQueue } from '../utils/viewsQueue'
 
 const CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME
 const API_KEY = process.env.CLOUDINARY_API_KEY
@@ -70,20 +71,26 @@ export class ArticleController {
   getUniqueArticle = async (req: Request, res: Response) => {
     const { id } = req.params
 
-    const article = await prisma.article.findUnique({
-      where: { id },
-      include: {
-        author: {
-          select: { id: true, name: true },
+    try {
+      viewsQueue.add({ articleId: id })
+
+      const article = await prisma.article.findUnique({
+        where: { id },
+        include: {
+          author: {
+            select: { id: true, name: true },
+          },
         },
-      },
-    })
+      })
 
-    if (!article) {
-      return res.status(404).json({ error: 'Article not found' })
+      if (!article) {
+        return res.status(404).json({ error: 'Article not found' })
+      }
+
+      return res.json({ article })
+    } catch (error) {
+      return res.status(500).json({ error: 'Something went wrong' })
     }
-
-    return res.json({ article })
   }
 
   getUserArticles = async (req: Request, res: Response) => {

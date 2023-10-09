@@ -21,6 +21,7 @@ model Article {
   author      User?    @relation(fields: [authorId], references: [id])
   authorId    String?
   imageUrl    String?  @db.VarChar(512)
+  views       Int      @default(0)
 }
 
 model User {

@@ -12,6 +12,7 @@ export class AuthController {
     this.login = this.login.bind(this)
     this.refreshToken = this.refreshToken.bind(this)
     this.logout = this.logout.bind(this)
+    this.verifyToken = this.verifyToken.bind(this)
   }
 
   async login(req: Request, res: Response) {
