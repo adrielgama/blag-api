@@ -67,7 +67,7 @@ export class AuthController {
     }
 
     return res.json({
-      user: { id: user.id, email: user.email },
+      user: { id: user.id, email: user.email, name: user.name },
       token,
       refreshToken: newRefreshToken,
     })
