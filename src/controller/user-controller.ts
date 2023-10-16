@@ -6,6 +6,11 @@ import { prisma } from '../utils/prisma'
 export class UserController {
   constructor() {
     this.getUser = this.getUser.bind(this)
+    this.updateUser = this.updateUser.bind(this)
+    this.deleteUser = this.deleteUser.bind(this)
+    this.createUser = this.createUser.bind(this)
+    this.getSingleUser = this.getSingleUser.bind(this)
+    this.isUserAdmin = this.isUserAdmin.bind(this)
   }
 
   private async isUserAdmin(userId: string): Promise<boolean> {
