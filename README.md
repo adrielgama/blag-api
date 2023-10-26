@@ -11,7 +11,6 @@ This is an [ExpressJS](https://expressjs.com/) REST API that uses [Prisma](https
 - Express
 - Postgres
 - TypeScript
-- Cloudinary
 - Jsonwebtoken
 - Marked
 - Node-cron

@@ -1,21 +1,8 @@
-import fs from 'fs'
 import { marked } from 'marked'
 import { Request, Response } from 'express'
-import { v2 as cloudinary } from 'cloudinary'
 import { prisma } from '../utils/prisma'
 import { ArticleQueryOptions, UpdateArticleData } from '../types'
 import { viewsQueue } from '../utils/viewsQueue'
-
-const CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME
-const API_KEY = process.env.CLOUDINARY_API_KEY
-const API_SECRET = process.env.CLOUDINARY_API_SECRET
-
-cloudinary.config({
-  cloud_name: CLOUD_NAME,
-  api_key: API_KEY,
-  api_secret: API_SECRET,
-  secure: true,
-})
 
 const isAdmin = async (userId: string): Promise<boolean> => {
   const user = await prisma.user.findUnique({
@@ -34,6 +21,12 @@ export class ArticleController {
     this.createArticle = this.createArticle.bind(this)
     this.updateArticle = this.updateArticle.bind(this)
     this.deleteArticle = this.deleteArticle.bind(this)
+    this.isValidString = this.isValidString.bind(this)
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  isValidString(value: any): boolean {
+    return typeof value === 'string' && value.trim() !== ''
   }
 
   isAuthorOrAdmin = async (articleId: string, userId: string) => {
@@ -131,9 +124,7 @@ export class ArticleController {
       imageUrl: providedImageUrl,
     } = req.body
 
-    let imageUrl = providedImageUrl
-
-    if (!title || title.trim() === '') {
+    if (!this.isValidString(title)) {
       return res.status(400).json({ error: 'Title is required' })
     }
 
@@ -159,12 +150,6 @@ export class ArticleController {
         })
       }
 
-      if (req.file) {
-        const result = await cloudinary.uploader.upload(req.file.path)
-        imageUrl = result.url
-        fs.unlinkSync(req.file.path)
-      }
-
       const renderedBody = marked(body)
 
       const article = await prisma.article.create({
@@ -174,7 +159,7 @@ export class ArticleController {
           body: renderedBody,
           published,
           authorId: author,
-          imageUrl,
+          imageUrl: providedImageUrl,
         },
       })
 
@@ -186,8 +171,9 @@ export class ArticleController {
 
   updateArticle = async (req: Request, res: Response) => {
     const { id } = req.params
-    const { title, description, body, published } = req.body
+    const { title, description, body, published, imageUrl } = req.body
     const { userId } = res.locals
+
     const existingArticle = await prisma.article.findUnique({
       where: { id },
     })
@@ -200,14 +186,15 @@ export class ArticleController {
       return res.status(403).json({ error: 'Permission denied' })
     }
 
-    if (title && typeof title !== 'string') {
+    if (title && !this.isValidString(title)) {
       return res.status(400).json({ error: 'Invalid title format.' })
     }
 
     const updateData: UpdateArticleData = {}
-    if (title) updateData.title = title
-    if (description) updateData.description = description
-    if (body) updateData.body = body
+    if (this.isValidString(title)) updateData.title = title
+    if (this.isValidString(description)) updateData.description = description
+    if (this.isValidString(body)) updateData.body = body
+    if (this.isValidString(imageUrl)) updateData.imageUrl = imageUrl
     if (published !== undefined) updateData.published = published
 
     try {

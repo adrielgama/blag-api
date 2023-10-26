@@ -10,6 +10,7 @@ interface UpdateArticleData {
   description?: string
   body?: string
   published?: boolean
+  imageUrl?: string
 }
 
 type ArticleQueryOptions = {
