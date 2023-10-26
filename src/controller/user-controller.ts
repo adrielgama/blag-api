@@ -198,6 +198,10 @@ export class UserController {
           .json({ error: 'You do not have permission to delete this user' })
       }
 
+      await prisma.refreshToken.deleteMany({
+        where: { userId: id },
+      })
+
       await prisma.article.deleteMany({
         where: { authorId: id },
       })
