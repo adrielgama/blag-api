@@ -140,6 +140,7 @@ export class UserController {
     }
 
     const isAdmin = await this.isUserAdmin(userId)
+
     if (userId !== id && !isAdmin) {
       return res.status(403).json({ error: 'Permission denied' })
     }
@@ -189,11 +190,9 @@ export class UserController {
         return res.status(404).json({ error: 'User not found' })
       }
 
-      const currentUser = await prisma.user.findUnique({
-        where: { id: userId },
-      })
+      const isAdmin = await this.isUserAdmin(userId)
 
-      if (userId !== id && (!currentUser || currentUser.typeUser !== 'ADMIN')) {
+      if (userId !== id && !isAdmin) {
         return res
           .status(403)
           .json({ error: 'You do not have permission to delete this user' })
