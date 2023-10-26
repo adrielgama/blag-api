@@ -2,6 +2,9 @@ import { hash } from 'bcrypt'
 import { Request, Response } from 'express'
 import { UpdateUserData } from 'src/types'
 import { prisma } from '../utils/prisma'
+import axios from 'axios'
+
+const reCAPTCHAKey = process.env.RECAPTCHA_KEY
 
 export class UserController {
   constructor() {
@@ -86,8 +89,16 @@ export class UserController {
   }
 
   async createUser(req: Request, res: Response): Promise<Response> {
-    const { name, email, password, typeUser } = req.body
+    const { name, email, password, typeUser, recaptchaValue } = req.body
     const { userId } = res.locals
+
+    const recaptchaSecretKey = reCAPTCHAKey
+    const verificationURL = `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecretKey}&response=${recaptchaValue}`
+
+    const recaptchaResponse = await axios.post(verificationURL)
+    if (!recaptchaResponse.data.success) {
+      return res.status(400).json({ error: 'Verificação reCAPTCHA falhou.' })
+    }
 
     if (!name || !email || !password) {
       return res.status(400).json({
