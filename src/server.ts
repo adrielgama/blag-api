@@ -16,6 +16,7 @@ const allowedOrigins = [
   'http://localhost:3000',
   'https://blag.adrielgama.dev',
   'https://www.josianemendonca.adv.br',
+  'https://dev-josianemendonca.vercel.app',
 ]
 
 app.use(
