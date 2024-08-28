@@ -92,7 +92,6 @@ export class ArticleController {
     const articles = await prisma.article.findMany({
       where: {
         authorId: userId,
-        published: true,
       },
       include: {
         author: {
